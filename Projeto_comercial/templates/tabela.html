@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ titulo }} | Portal Comercial{% endblock %}
+
+{% block conteudo %}
+<h1>{{ titulo }}</h1>
+
+{% if novo %}
+    <p><a class="botao" href="{{ url_for(novo) }}">Cadastrar</a></p>
+{% endif %}
+
+{% if busca is defined %}
+    <form method="get">
+        <label for="busca">Pesquisar</label>
+        <input id="busca" name="busca" value="{{ busca }}">
+        <button type="submit">Pesquisar</button>
+    </form>
+{% endif %}
+
+{% if dados %}
+    <table>
+        <tr>
+            {% for coluna in dados[0] %}
+                <th>{{ coluna }}</th>
+            {% endfor %}
+            {% if editar or detalhe %}<th>Ações</th>{% endif %}
+        </tr>
+
+        {% for linha in dados %}
+            <tr>
+                {% for valor in linha.values() %}
+                    <td>{{ "Não informado" if valor is none else valor }}</td>
+                {% endfor %}
+                {% if editar %}<td><a href="{{ url_for(editar, ident=linha.ID) }}">Editar</a></td>{% endif %}
+                {% if detalhe %}<td><a href="{{ url_for(detalhe, ident=linha.ID) }}">Ver itens</a></td>{% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>{{ vazio or "Nenhum registro encontrado." }}</p>
+{% endif %}
+{% endblock %}

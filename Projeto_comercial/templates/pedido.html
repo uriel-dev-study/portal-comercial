@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+{% block title %}Pedido {{ pedido.ID_Pedido }} | Portal Comercial{% endblock %}
+{% block conteudo %}
+
+<h1>Pedido {{ pedido.ID_Pedido }}</h1>
+<p>
+    <strong>Data:</strong> {{ pedido.Data_Pedido }}<br>
+    <strong>Cliente:</strong> {{ pedido.ID_Cliente }}<br>
+    <strong>Região:</strong> {{ pedido.Regiao_Log }}<br>
+    <strong>Vendedor:</strong> {{ pedido.Vendedor or "Não informado" }}<br>
+    <strong>Status:</strong> {{ pedido.Status }}<br>
+    <strong>Origem:</strong> {{ pedido.Origem_Registro }}
+</p>
+
+<h2>Itens</h2>
+<table>
+    <tr><th>Produto</th><th>Qtd</th><th>Preço</th><th>Desconto</th><th>Subtotal</th></tr>
+    {% for item in itens %}
+    <tr>
+        <td>{{ item.Produto }}</td><td>{{ item.Quantidade }}</td><td>R$ {{ item.Preco }}</td>
+        <td>R$ {{ item.Desconto }}</td><td>R$ {{ item.Subtotal }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<p>
+    <strong>Soma dos itens:</strong> R$ {{ soma_itens }} -
+    <strong>Valor Total gravado:</strong> R$ {{ pedido.Valor_Total }}
+    {% if soma_itens != pedido.Valor_Total %}<span class="aviso">Os valores não batem!</span>{% endif %}
+</p>
+
+<h2>Pagamentos</h2>
+{% if pagamentos %}
+    <table>
+        <tr><th>ID</th><th>Forma</th><th>Status</th><th>Valor</th><th>Data</th></tr>
+        {% for pg in pagamentos %}
+        <tr>
+            <td>{{ pg.ID }}</td><td>{{ pg.Forma }}</td><td>{{ pg.Status }}</td>
+            <td>R$ {{ pg.Valor }}</td><td>{{ pg.Data or "Não informado" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Nenhum pagamento registrado.</p>
+{% endif %}
+
+<p><a href="{{ url_for('pedidos') }}">Voltar para pedidos</a></p>
+{% endblock %}
