@@ -1,33 +1,41 @@
+
 <!doctype html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width", initial-scale=1>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block titulo %}Portal Comercial{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <header>
         <strong>Portal Comercial</strong>
+
         <nav>
-            <a href="/">Inicio</a>
-            <a href="/produtos">Produtos</a>
-            <a href="/categorias">Categorias</a>
-            <a href="/clientes">Clientes</a>
-            <a href="/locais">Locais</a>
-            <a href="/lojas">Lojas</a>
-            <a href="/vendedores">Vendedores</a>
-            <a href="/pedidos">Pedidos</a>
-            <a href="/relatorios">Relatórios</a>
-            <a href="/sobre">Sobre</a>
+            <a href="{{ url_for('inicio') }}">Início</a>
+            <a href="{{ url_for('produtos') }}">Produtos</a>
+            <a href="{{ url_for('categorias') }}">Categorias</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('locais') }}">Locais</a>
+            <a href="{{ url_for('lojas') }}">Lojas</a>
+            <a href="{{ url_for('vendedores') }}">Vendedores</a>
+            <a href="{{ url_for('pedidos') }}">Pedidos</a>
+            <a href="{{ url_for('relatorios') }}">Relatórios</a>
+            <a href="{{ url_for('sobre') }}">Sobre</a>
         </nav>
     </header>
+
     <main>
         {% for mensagem in get_flashed_messages() %}
-        <p class="aviso">{{ mensagem }}</p>
+            <p class="aviso">{{ mensagem }}</p>
         {% endfor %}
+
         {% block conteudo %}{% endblock %}
     </main>
-    <footer>Laboratório local com banco_v3. Não publicar na internet</footer>
+
+    <footer>
+        Laboratório local com banco_v3. Não publicar na internet.
+    </footer>
 </body>
 </html>
